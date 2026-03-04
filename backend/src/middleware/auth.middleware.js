@@ -1,23 +1,23 @@
+const redis = require("../config/cache");
 const blacklistModel = require("../models/blacklist.model");
 const userModel = require("../models/user.model");
 const jwt = require('jsonwebtoken');
 
-async function authUser(req,res, next) {
+
+async function authUser(req, res, next) {
     const token = req.cookies.token;
 
-    if(!token){
+    if (!token) {
         return res.status(401).json({
-            message:"Token not found"
+            message: "Token not found"
         })
     }
 
-    const isTokenBlacklisted = await blacklistModel.findOne({
-        token
-    })
+    const isTokenBlacklisted = await redis.get(token)
 
-    if(isTokenBlacklisted){
+    if (isTokenBlacklisted) {
         return res.status(401).json({
-            message:"Token is blacklisted"
+            message: "Invalid Token"
         })
     }
 
@@ -29,7 +29,7 @@ async function authUser(req,res, next) {
         next()
     } catch (err) {
         return res.status(401).json({
-            message:"Invalid token"
+            message: "Invalid token"
         })
     }
 }

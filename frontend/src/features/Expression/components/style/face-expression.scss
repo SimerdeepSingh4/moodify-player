@@ -1,0 +1,109 @@
+.expression-card {
+  position: relative;
+  background:
+    radial-gradient(circle at top, #18604d 0, transparent 55%),
+    radial-gradient(circle at bottom, #065f46 0, transparent 60%),
+    #000000;
+  border: 1px solid rgba(31, 41, 55, 0.9);
+  border-radius: 18px;
+  padding: 1rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.expression-header {
+  margin-bottom: 1rem;
+
+  .eyebrow {
+    color: #6ee7b7;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.74rem;
+    margin-bottom: 0.35rem;
+  }
+
+  h2 {
+    font-family: "Space Grotesk", "Poppins", sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+}
+
+.expression-video {
+
+  width: 50%;
+  aspect-ratio: 1/1;
+  max-height: 220px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #020617;
+  border: 1px solid rgba(31, 41, 55, 0.9);
+}
+
+.expression-status {
+  margin-top: 0.9rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.7rem 0.8rem;
+  border-radius: 12px;
+  background: rgba(15, 23, 42, 0.85);
+
+  .label {
+    color: rgba(209, 213, 219, 0.9);
+    font-size: 0.86rem;
+  }
+
+  strong {
+    color: #fff;
+    font-family: "Space Grotesk", "Poppins", sans-serif;
+    font-size: 0.95rem;
+  }
+}
+
+.mood-result {
+  margin-top: 0.65rem;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.9rem;
+
+  span {
+    color: #6ee7b7;
+    text-transform: capitalize;
+    font-weight: 600;
+  }
+}
+
+.error-text {
+  margin-top: 0.7rem;
+  color: #ff8a8a;
+  font-size: 0.86rem;
+}
+
+.detect-button {
+  width: 100%;
+  margin-top: 0.9rem;
+  border: none;
+  border-radius: 12px;
+  padding: 0.8rem;
+  background: linear-gradient(120deg, #22c55e, #16a34a);
+  color: #020617;
+  font-family: "Space Grotesk", "Poppins", sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+
+  &:hover:enabled {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(34, 197, 94, 0.45);
+  }
+
+  &:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+  }
+}

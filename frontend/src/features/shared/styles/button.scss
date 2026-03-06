@@ -1,14 +1,34 @@
 .button{
-    background-color: #dd4200;
+    background-color: #1db954;
     border: none;
-    color: white;
-    padding-inline: 1rem;
-    padding-block: 0.5rem;
+    color: #000000;
+    padding-inline: 1.3rem;
+    padding-block: 0.6rem;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     outline: none;
-    font-size: 16px;
-    border-radius: 0.5rem;
+    font-size: 15px;
+    border-radius: 999px;
     cursor: pointer;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    transition: background-color 150ms ease, transform 150ms ease, box-shadow 150ms ease;
+
+    &:hover{
+        background-color: #1ed760;
+        transform: translateY(-1px);
+        box-shadow: 0 8px 20px rgba(30, 215, 96, 0.45);
+    }
+
+    &:active{
+        transform: translateY(0);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+    }
+
+    &:disabled{
+        opacity: 0.6;
+        cursor: not-allowed;
+        box-shadow: none;
+    }
 }

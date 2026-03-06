@@ -1,0 +1,20 @@
+@import "tailwindcss";
+*::-webkit-scrollbar{
+    width: 0.5rem;
+}
+*::-webkit-scrollbar-track{
+    background: #000000;
+}
+*::-webkit-scrollbar-thumb{
+    background:
+    radial-gradient(circle at top, #0c2e25 0, transparent 55%),
+    radial-gradient(circle at bottom, #094131 0, transparent 60%),
+    #000000;
+    border-radius: 0.5rem;
+}
+*::-webkit-scrollbar-thumb:hover{
+    background:
+    radial-gradient(circle at top, #1e7961 0, transparent 55%),
+    radial-gradient(circle at bottom, #128564 0, transparent 60%),
+    #000000;
+}

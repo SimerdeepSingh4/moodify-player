@@ -1,6 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { detect, init } from "../utils/utils";
+import { useSong } from "../../home/hooks/useSong";
+import "./style/face-expression.scss";
 
+const expressionToMoodMap = {
+    Happy: "happy",
+    Sad: "sad",
+    Surprised: "happy",
+    Neutral: "happy",
+};
 
 export default function FaceExpression() {
     const videoRef = useRef(null);
@@ -9,13 +17,22 @@ export default function FaceExpression() {
     const streamRef = useRef(null);
 
     const [expression, setExpression] = useState("Detecting...");
+    const [cameraError, setCameraError] = useState("");
+    const [cameraReady, setCameraReady] = useState(false);
+    const [lastMood, setLastMood] = useState("Neutral");
 
-
+    const { handleRandomMoodSong, loading } = useSong();
 
     useEffect(() => {
-
-
-        init({ landmarkerRef, videoRef, streamRef});
+        const setup = async () => {
+            try {
+                await init({ landmarkerRef, videoRef, streamRef });
+                setCameraReady(true);
+            } catch (error) {
+                
+            }
+        };
+        setup();
 
         return () => {
             if (animationRef.current) {
@@ -34,15 +51,50 @@ export default function FaceExpression() {
         };
     }, []);
 
+    const handleDetect = async () => {
+        const currentExpression = detect({ landmarkerRef, videoRef, setExpression });
+        if (!currentExpression) return;
+
+        const mappedMood = expressionToMoodMap[currentExpression] || "happy";
+        setLastMood(mappedMood);
+        await handleRandomMoodSong({ mood: mappedMood });
+    };
+
     return (
-        <div style={{ textAlign: "center" }}>
+        <section className="expression-card">
+            <div className="expression-header">
+                <p className="eyebrow">Mood Detection</p>
+
+                <h2>Record expression and fetch matching songs</h2>
+            </div>
+
             <video
                 ref={videoRef}
-                style={{ width: "400px", borderRadius: "12px" }}
+                className="expression-video"
                 playsInline
+                muted
             />
-            <h2>{expression}</h2>
-            <button onClick={()=> detect({landmarkerRef, videoRef, setExpression})} >Detect expression</button>
-        </div>
+
+            <div className="expression-status">
+                <span className="label">Expression</span>
+                <strong>{expression}</strong>
+            </div>
+
+            {lastMood && (
+                <p className="mood-result">
+                    Mood matched: <span>{lastMood}</span>
+                </p>
+            )}
+
+            {cameraError && <p className="error-text">{cameraError}</p>}
+
+            <button
+                className="detect-button"
+                onClick={handleDetect}
+                disabled={!cameraReady || loading}
+            >
+                {loading ? "Loading songs..." : "Record & Detect Mood"}
+            </button>
+        </section>
     );
 }

@@ -1,50 +1,52 @@
 import React, { useState } from 'react'
-import "../style/login.scss"
+import '../style/login.scss'
 import FormGroup from '../components/FormGroup'
 import { Link } from 'react-router'
 import { useAuth } from '../hooks/useAuth'
+
 const Login = () => {
+  const { loading, handleLogin } = useAuth()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    handleLogin(email, password)
+  }
 
-    const { loading, handleLogin } = useAuth()
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
+  return (
+    <main className="login-page">
+      <div className="form-container">
+        <h1>Log in to Moodify</h1>
+        <p className="subtitle">Continue your green &amp; black listening session.</p>
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        handleLogin(email, password)
-    }
+        <form onSubmit={handleSubmit}>
+          <FormGroup
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            label="Email"
+            placeholder="Enter your email"
+          />
+          <FormGroup
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            label="Password"
+            placeholder="Enter your password"
+          />
+          <button className="button" type="submit" disabled={loading}>
+            {loading ? 'Logging in…' : 'Login'}
+          </button>
+        </form>
 
-    if (loading) {
-        return (
-            <main className='login-page'>
-                <h1>Loading....</h1>
-            </main>
-        )
-    }
-    return (
-        <main className='login-page'>
-            <div className="form-container">
-                <h1>Login</h1>
-                <form onSubmit={handleSubmit}>
-                    <FormGroup
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        label="Email"
-                        placeholder="Enter your email"
-                    />
-                    <FormGroup
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        label="Password"
-                        placeholder="Enter your password"
-                    />
-                    <button className='button' type='submit'>Login</button>
-                </form>
-                <p>Don't have an account? <Link to="/register">Register here</Link></p>
-            </div>
-        </main>
-    )
+        <p>
+          Don&apos;t have an account?{' '}
+          <Link to="/register">
+            Register here
+          </Link>
+        </p>
+      </div>
+    </main>
+  )
 }
 
 export default Login
